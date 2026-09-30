@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { motion, isMotionComponent, type HTMLMotionProps } from "motion/react"
+import { motion, type HTMLMotionProps } from "motion/react"
 import { cn } from "@/lib/utils"
 
 type AnyProps = Record<string, unknown>
@@ -19,6 +19,39 @@ type SlotProps<T extends HTMLElement = HTMLElement> = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   children?: any
 } & DOMMotionProps<T>
+
+const nativeMotionComponents = new Map<string, React.ElementType>()
+const motionOnlyProps = [
+  "animate",
+  "exit",
+  "initial",
+  "layout",
+  "layoutId",
+  "transition",
+  "variants",
+  "whileDrag",
+  "whileFocus",
+  "whileHover",
+  "whileInView",
+  "whileTap",
+] as const
+
+function getNativeMotionComponent(tagName: string) {
+  const cached = nativeMotionComponents.get(tagName)
+  if (cached) return cached
+
+  const component = motion.create(tagName as keyof HTMLElementTagNameMap)
+  nativeMotionComponents.set(tagName, component)
+  return component
+}
+
+function omitMotionProps(props: AnyProps) {
+  const safeProps = { ...props }
+
+  for (const prop of motionOnlyProps) delete safeProps[prop]
+
+  return safeProps
+}
 
 function mergeRefs<T>(
   ...refs: (React.Ref<T> | undefined)[]
@@ -63,28 +96,25 @@ function Slot<T extends HTMLElement = HTMLElement>({
   ref,
   ...props
 }: SlotProps<T>) {
-  const isAlreadyMotion =
-    typeof children.type === "object" &&
-    children.type !== null &&
-    isMotionComponent(children.type)
-
-  const Base = React.useMemo(
-    () =>
-      isAlreadyMotion
-        ? (children.type as React.ElementType)
-        : motion.create(children.type as React.ElementType),
-    [isAlreadyMotion, children.type]
-  )
-
   if (!React.isValidElement(children)) return null
 
   const { ref: childRef, ...childProps } = children.props as AnyProps
-
   const mergedProps = mergeProps(childProps, props)
+  const mergedRef = mergeRefs(childRef as React.Ref<T>, ref)
 
-  return (
-    <Base {...mergedProps} ref={mergeRefs(childRef as React.Ref<T>, ref)} />
-  )
+  if (typeof children.type !== "string") {
+    return React.cloneElement(
+      children as React.ReactElement<AnyProps>,
+      {
+        ...omitMotionProps(mergedProps),
+        ref: mergedRef,
+      } as AnyProps
+    )
+  }
+
+  const Base = getNativeMotionComponent(children.type)
+
+  return <Base {...mergedProps} ref={mergedRef} />
 }
 
 export {
