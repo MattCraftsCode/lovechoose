@@ -1,15 +1,26 @@
-import { Geist, Geist_Mono } from "next/font/google"
+import type { Metadata } from "next"
+import { DM_Sans, Playfair_Display } from "next/font/google"
+
+import { SiteFooter } from "@/components/site/site-footer"
+import { SiteHeader } from "@/components/site/site-header"
+import { cn } from "@/lib/utils"
 
 import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
-import { cn } from "@/lib/utils";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'})
-
-const fontMono = Geist_Mono({
+const sans = DM_Sans({ subsets: ["latin"], variable: "--font-dm-sans" })
+const serif = Playfair_Display({
   subsets: ["latin"],
-  variable: "--font-mono",
+  variable: "--font-playfair",
 })
+
+export const metadata: Metadata = {
+  title: {
+    default: "lovechoose — Indie Developer Portfolio",
+    template: "%s — lovechoose",
+  },
+  description:
+    "Independent developer portfolio for focused websites, browser extensions and mini programs.",
+}
 
 export default function RootLayout({
   children,
@@ -17,13 +28,12 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={cn("antialiased", fontMono.variable, "font-sans", geist.variable)}
-    >
+    <html lang="en" className={cn(sans.variable, serif.variable)}>
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <div className="grain" aria-hidden="true" />
+        <SiteHeader />
+        {children}
+        <SiteFooter />
       </body>
     </html>
   )
