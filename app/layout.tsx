@@ -31,7 +31,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={cn(sans.variable, serif.variable)}>
+    <html
+      lang="en"
+      className={cn(sans.variable, serif.variable)}
+      data-scroll-behavior="smooth"
+    >
       <body>
         <div className="grain" aria-hidden="true" />
         <SiteHeader />

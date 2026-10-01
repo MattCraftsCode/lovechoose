@@ -1,7 +1,6 @@
 import Link from "next/link"
 import { ArrowDown, ArrowRight, Sparkles } from "lucide-react"
 
-import { Button } from "@/components/animate-ui/components/buttons/button"
 import { Slide } from "@/components/animate-ui/primitives/effects/slide"
 import { StudioVisual } from "@/components/portfolio/studio-visual"
 import { WorkFilter } from "@/components/portfolio/work-filter"
@@ -27,24 +26,19 @@ export default function HomePage() {
             bias toward useful details.
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
-            <Button
-              asChild
-              size="lg"
-              className="h-11 rounded-full px-5 shadow-none"
+            <Link
+              href="#work"
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-primary px-5 text-sm font-medium text-primary-foreground transition-[transform,background-color] hover:-translate-y-0.5 hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
             >
-              <Link href="#work">
-                Explore my work
-                <ArrowDown className="size-4" aria-hidden="true" />
-              </Link>
-            </Button>
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-              className="h-11 rounded-full border-border bg-white px-5 shadow-none"
+              Explore my work
+              <ArrowDown className="size-4" aria-hidden="true" />
+            </Link>
+            <Link
+              href="/about"
+              className="inline-flex h-11 items-center justify-center rounded-full border border-border bg-white px-5 text-sm font-medium transition-[transform,background-color] hover:-translate-y-0.5 hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
             >
-              <Link href="/about">About me</Link>
-            </Button>
+              About me
+            </Link>
           </div>
         </Slide>
 
@@ -119,17 +113,13 @@ export default function HomePage() {
                 page speed and the tiny moment when a tool simply feels right
                 all matter.
               </p>
-              <Button
-                asChild
-                variant="secondary"
-                size="lg"
-                className="mt-8 h-11 rounded-full bg-[#fff2a6] px-5 text-[#24321f] shadow-none hover:bg-[#fff6c5]"
+              <Link
+                href="/about"
+                className="mt-8 inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#fff2a6] px-5 text-sm font-medium text-[#24321f] transition-[transform,background-color] hover:-translate-y-0.5 hover:bg-[#fff6c5] focus-visible:ring-2 focus-visible:ring-[#fff2a6] focus-visible:outline-none"
               >
-                <Link href="/about">
-                  More about me
-                  <ArrowRight className="size-4" aria-hidden="true" />
-                </Link>
-              </Button>
+                More about me
+                <ArrowRight className="size-4" aria-hidden="true" />
+              </Link>
             </div>
           </div>
         </Slide>
