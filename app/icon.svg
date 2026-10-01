@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect x="16" y="16" width="480" height="480" rx="112" fill="#24321f" />
+  <text
+    x="256"
+    y="365"
+    fill="#fffef8"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="320"
+    font-weight="700"
+    text-anchor="middle"
+  >L</text>
+</svg>
