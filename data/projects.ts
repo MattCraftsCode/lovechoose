@@ -105,7 +105,7 @@ export const projects: Project[] = [
     stack: ["Next.js", "Tailwind CSS", "TypeScript", "Image export"],
   },
   {
-    slug: "link-inspector",
+    slug: "backlink-inspector",
     name: "Backlink Inspector",
     label: "Backlink Inspection",
     category: "extension",
@@ -114,7 +114,7 @@ export const projects: Project[] = [
       "Inspect backlinks, link attributes, visibility and plain-text mentions on the current page.",
     color: "#E6F0C3",
     accent: "#F3F8E0",
-    href: "/link-inspector",
+    href: "/backlink-inspector",
     storeUrl:
       "https://chromewebstore.google.com/detail/backlink-inspector/hhaeopcfeiijaancahjhdogbhobnnngg",
     cover: "/images/projects/backlink-inspector.png",
