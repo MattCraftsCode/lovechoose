@@ -24,13 +24,14 @@ export function ProjectCard({
       delay={delay}
       offset={32}
       inViewMargin="-8% 0px -8% 0px"
+      transition={{ type: "spring", stiffness: 160, damping: 24, mass: 0.9 }}
       className="h-full"
     >
       <Link
         id={project.slug}
         href={project.href}
         className={cn(
-          "project-card group block h-full overflow-hidden rounded-2xl border border-border bg-white p-3 shadow-[0_12px_34px_rgba(58,79,49,0.06)] transition-[transform,box-shadow,border-color] duration-500 ease-out hover:-translate-y-2 hover:rotate-[-0.35deg] hover:border-[#abc28f] hover:shadow-[0_28px_65px_rgba(58,79,49,0.16)] focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
+          "project-card group block h-full transform-gpu overflow-hidden rounded-2xl border border-border bg-white p-3 shadow-[0_12px_34px_rgba(58,79,49,0.06)] transition-[transform,box-shadow,border-color] duration-[460ms] ease-in-out hover:-translate-y-1 hover:border-[#abc28f] hover:shadow-[0_20px_48px_rgba(58,79,49,0.12)] focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
           compact && "grid gap-4 md:grid-cols-[260px_1fr]"
         )}
       >
@@ -53,14 +54,14 @@ export function ProjectCard({
                   "object-cover object-top",
                   project.coverScroll
                     ? "transition-[object-position] duration-[6000ms] ease-in-out group-hover:object-bottom"
-                    : "transition-transform duration-700 ease-out group-hover:scale-[1.035]"
+                    : "transition-transform duration-[900ms] ease-in-out group-hover:scale-[1.02]"
                 )}
               />
               <div className="absolute inset-0 bg-linear-to-t from-[#24321f]/10 via-transparent to-transparent" />
               <span className="absolute top-4 left-4 rounded-full border border-white/70 bg-white/85 px-3 py-1 text-xs font-semibold shadow-sm backdrop-blur-sm">
                 {project.label}
               </span>
-              <span className="absolute top-4 right-4 grid size-8 place-items-center rounded-full border border-white/70 bg-white/85 shadow-sm backdrop-blur-sm transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
+              <span className="absolute top-4 right-4 grid size-8 place-items-center rounded-full border border-white/70 bg-white/85 shadow-sm backdrop-blur-sm transition-transform duration-[420ms] ease-in-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
                 <ArrowUpRight className="size-4" aria-hidden="true" />
               </span>
             </>
@@ -70,7 +71,7 @@ export function ProjectCard({
                 <span className="rounded-full bg-white/70 px-3 py-1 text-xs font-semibold backdrop-blur-sm">
                   {project.label}
                 </span>
-                <span className="grid size-8 place-items-center rounded-full bg-white/45 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
+                <span className="grid size-8 place-items-center rounded-full bg-white/45 transition-transform duration-[420ms] ease-in-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
                   <ArrowUpRight className="size-4" aria-hidden="true" />
                 </span>
               </div>
@@ -84,7 +85,7 @@ export function ProjectCard({
                   </p>
                 ) : null}
               </div>
-              <div className="poster-orbit absolute -right-[25%] -bottom-[44%] size-[72%] rounded-full bg-white/25 transition-transform duration-500 group-hover:-translate-x-3 group-hover:-translate-y-3 group-hover:scale-110" />
+              <div className="poster-orbit absolute -right-[25%] -bottom-[44%] size-[72%] rounded-full bg-white/25 transition-transform duration-700 ease-in-out group-hover:-translate-x-2 group-hover:-translate-y-2 group-hover:scale-105" />
               <div className="absolute right-[13%] bottom-[22%] size-4 rounded-full border border-white/55 bg-white/20" />
             </>
           )}
@@ -103,7 +104,7 @@ export function ProjectCard({
             </p>
             <span className="mt-7 inline-flex items-center gap-2 text-sm font-bold">
               View project
-              <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+              <ArrowUpRight className="size-4 transition-transform duration-[420ms] ease-in-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </span>
           </div>
         ) : (

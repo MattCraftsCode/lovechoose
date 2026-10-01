@@ -29,8 +29,14 @@ export function PortfolioGallery({ projects }: { projects: Project[] }) {
           delay={100 + index * 70}
           offset={30}
           inViewMargin="-8% 0px -8% 0px"
+          transition={{
+            type: "spring",
+            stiffness: 160,
+            damping: 24,
+            mass: 0.9,
+          }}
         >
-          <article id={project.slug} className="group min-w-0">
+          <article id={project.slug} className="min-w-0">
             <div className="px-2 text-center">
               <h2 className="font-serif text-2xl leading-tight text-[#5f7d41]">
                 {project.name}
@@ -40,7 +46,7 @@ export function PortfolioGallery({ projects }: { projects: Project[] }) {
               </p>
             </div>
 
-            <div className="relative mt-4 aspect-[4/5] overflow-hidden rounded-2xl border border-border bg-white p-3 shadow-[0_14px_40px_rgba(58,79,49,0.08)] transition-[transform,box-shadow,border-color] duration-300 group-hover:-translate-y-1 group-hover:border-[#abc28f] group-hover:shadow-[0_24px_60px_rgba(58,79,49,0.16)]">
+            <div className="group relative mt-4 aspect-[4/5] transform-gpu overflow-hidden rounded-2xl border border-border bg-white p-3 shadow-[0_14px_40px_rgba(58,79,49,0.08)] transition-[transform,box-shadow,border-color] duration-[460ms] ease-in-out hover:-translate-y-1 hover:border-[#abc28f] hover:shadow-[0_20px_48px_rgba(58,79,49,0.12)]">
               {project.cover ? (
                 <div className="relative h-full overflow-hidden rounded-xl border border-[#dfe9cf] bg-[#f8faf1]">
                   <Image
@@ -56,7 +62,7 @@ export function PortfolioGallery({ projects }: { projects: Project[] }) {
               ) : (
                 <ExtensionPreview projectName={project.name} />
               )}
-              <div className="absolute inset-x-3 bottom-3 flex items-end justify-between gap-3 rounded-xl border border-white/65 bg-[#fffef8]/90 p-3 shadow-lg backdrop-blur-md transition-transform duration-300 sm:translate-y-[calc(100%+1rem)] sm:group-focus-within:translate-y-0 sm:group-hover:translate-y-0">
+              <div className="absolute inset-x-3 bottom-3 flex items-end justify-between gap-3 rounded-xl border border-white/65 bg-[#fffef8]/90 p-3 shadow-lg backdrop-blur-md transition-transform duration-[420ms] ease-in-out sm:translate-y-[calc(100%+1rem)] sm:group-focus-within:translate-y-0 sm:group-hover:translate-y-0">
                 <div className="min-w-0">
                   <p className="text-[10px] font-bold tracking-[0.18em] text-[#708d4e] uppercase">
                     {project.category === "mini"
