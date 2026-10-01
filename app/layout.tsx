@@ -3,6 +3,7 @@ import { DM_Sans, Playfair_Display } from "next/font/google"
 
 import { SiteFooter } from "@/components/site/site-footer"
 import { SiteHeader } from "@/components/site/site-header"
+import { siteProfile } from "@/data/site"
 import { cn } from "@/lib/utils"
 
 import "./globals.css"
@@ -20,6 +21,8 @@ export const metadata: Metadata = {
   },
   description:
     "Independent developer portfolio for focused websites, browser extensions and mini programs.",
+  authors: [{ name: "MattCraftsCode", url: siteProfile.github }],
+  creator: "MattCraftsCode",
 }
 
 export default function RootLayout({

@@ -1,4 +1,5 @@
 import { Slide } from "@/components/animate-ui/primitives/effects/slide"
+import { ExtensionGallery } from "@/components/portfolio/extension-gallery"
 import { ProjectCard } from "@/components/portfolio/project-card"
 import {
   categoryContent,
@@ -22,16 +23,20 @@ export function CategoryPage({ category }: { category: ProjectCategory }) {
         </p>
       </Slide>
 
-      <div className="mt-12 grid gap-6">
-        {categoryProjects.map((project, index) => (
-          <ProjectCard
-            key={project.slug}
-            project={project}
-            compact
-            delay={100 + index * 70}
-          />
-        ))}
-      </div>
+      {category === "extension" ? (
+        <ExtensionGallery projects={categoryProjects} />
+      ) : (
+        <div className="mt-12 grid gap-6">
+          {categoryProjects.map((project, index) => (
+            <ProjectCard
+              key={project.slug}
+              project={project}
+              compact
+              delay={100 + index * 70}
+            />
+          ))}
+        </div>
+      )}
     </main>
   )
 }

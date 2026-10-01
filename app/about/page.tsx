@@ -4,6 +4,7 @@ import { ArrowUpRight, Layers3, Search, WandSparkles } from "lucide-react"
 import { Button } from "@/components/animate-ui/components/buttons/button"
 import { Slide } from "@/components/animate-ui/primitives/effects/slide"
 import { StudioVisual } from "@/components/portfolio/studio-visual"
+import { siteLinks, siteProfile } from "@/data/site"
 
 export const metadata: Metadata = {
   title: "About",
@@ -102,16 +103,32 @@ export default function AboutPage() {
               Let&apos;s make the useful version, then make it feel right.
             </h2>
           </div>
-          <Button
-            asChild
-            size="lg"
-            className="h-11 shrink-0 rounded-full px-5 shadow-none"
-          >
-            <a href="mailto:hello@lovechoose.com">
-              Say hello
-              <ArrowUpRight className="size-4" />
-            </a>
-          </Button>
+          <div className="flex shrink-0 flex-col items-start gap-3 sm:items-end">
+            <Button
+              asChild
+              size="lg"
+              className="h-11 rounded-full px-5 shadow-none"
+            >
+              <a href={`mailto:${siteProfile.email}`}>
+                Say hello
+                <ArrowUpRight className="size-4" />
+              </a>
+            </Button>
+            <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm font-bold">
+              {siteLinks.slice(0, 2).map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1.5 underline-offset-4 hover:underline"
+                >
+                  {item.label}
+                  <ArrowUpRight className="size-3.5" aria-hidden="true" />
+                </a>
+              ))}
+            </div>
+          </div>
         </section>
       </Slide>
     </main>

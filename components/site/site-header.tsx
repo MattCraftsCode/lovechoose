@@ -16,6 +16,7 @@ import {
 } from "@/components/animate-ui/components/radix/sheet"
 import { useState } from "react"
 import { projectMap } from "@/data/projects"
+import { siteProfile } from "@/data/site"
 import { cn } from "@/lib/utils"
 
 const navigation = [
@@ -103,7 +104,7 @@ export function SiteHeader() {
             size="sm"
             className="hidden h-9 rounded-full px-4 shadow-none sm:inline-flex"
           >
-            <a href="mailto:hello@lovechoose.com">
+            <a href={`mailto:${siteProfile.email}`}>
               Say hello
               <Mail className="size-3.5" aria-hidden="true" />
             </a>
@@ -152,7 +153,7 @@ export function SiteHeader() {
               </nav>
               <div className="mt-auto p-5">
                 <Button asChild className="h-11 w-full rounded-full">
-                  <a href="mailto:hello@lovechoose.com">Say hello</a>
+                  <a href={`mailto:${siteProfile.email}`}>Say hello</a>
                 </Button>
               </div>
             </SheetContent>
