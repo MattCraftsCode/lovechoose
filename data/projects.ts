@@ -81,6 +81,30 @@ export const projects: Project[] = [
     stack: ["Next.js", "Tailwind CSS", "TypeScript", "Content design"],
   },
   {
+    slug: "fake-generator",
+    name: "Fake Generator",
+    label: "Realistic Screen Mockups",
+    category: "website",
+    categoryLabel: "Websites",
+    description:
+      "Create editable message screens and polished interface mockups, preview every detail live and export a crisp image in the browser.",
+    color: "#DDE8FF",
+    accent: "#EEF4FF",
+    href: "/fake-generator",
+    liveUrl: "https://www.fake-generator.com/",
+    cover: "/images/projects/fake-generator-cover.webp",
+    coverAlt: "Fake Generator website home page",
+    features: [
+      "Build realistic iPhone and iMessage conversations for mockups and storyboards",
+      "Edit message content and screen details with an immediate live preview",
+      "Download polished, high-resolution PNG images directly from the browser",
+      "Explore a growing roadmap of generators for messages, social content and interface screens",
+    ],
+    story:
+      "Fake Generator is built for creators, storytellers and product teams who need a convincing interface visual without rebuilding an entire app. It turns a detailed mockup workflow into a focused browser tool, making it faster to shape a scene, review the result and export an image ready for a story, video or product concept.",
+    stack: ["Next.js", "Tailwind CSS", "TypeScript", "Image export"],
+  },
+  {
     slug: "link-inspector",
     name: "Backlink Inspector",
     label: "Backlink Inspection",
