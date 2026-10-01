@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import Link from "next/link"
 import {
   ArrowUpRight,
@@ -40,7 +41,17 @@ export function PortfolioGallery({ projects }: { projects: Project[] }) {
             </div>
 
             <div className="relative mt-4 aspect-[4/5] overflow-hidden rounded-2xl border border-border bg-white p-3 shadow-[0_14px_40px_rgba(58,79,49,0.08)] transition-[transform,box-shadow,border-color] duration-300 group-hover:-translate-y-1 group-hover:border-[#abc28f] group-hover:shadow-[0_24px_60px_rgba(58,79,49,0.16)]">
-              {project.category === "mini" ? (
+              {project.cover ? (
+                <div className="relative h-full overflow-hidden rounded-xl border border-[#dfe9cf] bg-[#f8faf1]">
+                  <Image
+                    src={project.cover}
+                    alt={project.coverAlt ?? project.name}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover object-top transition-[object-position] duration-[6000ms] ease-in-out group-hover:object-bottom"
+                  />
+                </div>
+              ) : project.category === "mini" ? (
                 <MiniProgramPreview projectName={project.name} />
               ) : (
                 <ExtensionPreview projectName={project.name} />

@@ -49,7 +49,12 @@ export function ProjectCard({
                 alt={project.coverAlt ?? project.name}
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-                className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.035]"
+                className={cn(
+                  "object-cover object-top",
+                  project.coverScroll
+                    ? "transition-[object-position] duration-[6000ms] ease-in-out group-hover:object-bottom"
+                    : "transition-transform duration-700 ease-out group-hover:scale-[1.035]"
+                )}
               />
               <div className="absolute inset-0 bg-linear-to-t from-[#24321f]/10 via-transparent to-transparent" />
               <span className="absolute top-4 left-4 rounded-full border border-white/70 bg-white/85 px-3 py-1 text-xs font-semibold shadow-sm backdrop-blur-sm">
