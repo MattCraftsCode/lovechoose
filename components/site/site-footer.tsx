@@ -1,4 +1,4 @@
-import { Mail } from "lucide-react"
+import { Languages, Mail } from "lucide-react"
 
 import { siteLinks } from "@/data/site"
 
@@ -13,7 +13,17 @@ export function SiteFooter() {
     <footer className="mt-24 border-t border-border">
       <div className="mx-auto flex max-w-7xl flex-col gap-6 px-5 py-10 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between lg:px-8">
         <p>Made with curiosity, code & matcha · lovechoose.com</p>
-        <nav className="flex flex-wrap gap-2" aria-label="Social links">
+        <nav className="flex flex-wrap gap-2" aria-label="Footer links">
+          <a
+            href="https://cn.lovechoose.com/"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex h-9 items-center gap-2 rounded-full border border-border bg-white/70 px-3 text-xs font-bold text-foreground transition-colors hover:bg-secondary"
+            aria-label="Chinese version"
+          >
+            <Languages className="size-3.5" aria-hidden="true" />
+            Chinese version
+          </a>
           {siteLinks.map((item) => {
             const Icon = socialIcons[item.label]
 
