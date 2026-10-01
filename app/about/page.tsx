@@ -53,11 +53,7 @@ export default function AboutPage() {
           <div className="mt-8 grid gap-3 sm:grid-cols-3">
             <Fact label="Focus" value="Web tools" color="#f3f8e8" />
             <Fact label="Style" value="Small & polished" color="#fff8cf" />
-            <Fact
-              label="Languages"
-              value="EN · 中文 · 日本語"
-              color="#edf4df"
-            />
+            <Fact label="Languages" value="EN · 中文" color="#edf4df" />
           </div>
         </Slide>
       </section>

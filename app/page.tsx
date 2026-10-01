@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ArrowDown, ArrowRight, CircleCheck, Sparkles } from "lucide-react"
+import { ArrowDown, ArrowRight, Sparkles } from "lucide-react"
 
 import { Button } from "@/components/animate-ui/components/buttons/button"
 import { Slide } from "@/components/animate-ui/primitives/effects/slide"
@@ -79,28 +79,9 @@ export default function HomePage() {
         </Slide>
       </section>
 
-      <section className="mx-auto max-w-7xl px-5 py-8 lg:px-8">
-        <Slide inView offset={24}>
-          <div className="grid gap-5 rounded-2xl border border-border bg-[#fffdf1] p-5 md:grid-cols-[1fr_auto] md:items-center">
-            <div>
-              <p className="text-sm font-bold text-[#78984f]">
-                Currently building
-              </p>
-              <p className="mt-1 font-serif text-2xl">
-                Small web products with clear search intent and elegant UX.
-              </p>
-            </div>
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <CircleCheck className="size-4 text-primary" aria-hidden="true" />
-              Shipping continuously
-            </div>
-          </div>
-        </Slide>
-      </section>
-
       <section
         id="work"
-        className="mx-auto max-w-7xl scroll-mt-24 px-5 py-16 lg:px-8"
+        className="mx-auto max-w-7xl scroll-mt-24 px-5 py-20 lg:px-8"
       >
         <Slide inView offset={30}>
           <div className="flex flex-col gap-7 md:flex-row md:items-end md:justify-between">

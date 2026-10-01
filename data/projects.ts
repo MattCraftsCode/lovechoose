@@ -10,6 +10,8 @@ export type Project = {
   color: string
   accent: string
   href: string
+  cover?: string
+  coverAlt?: string
   features: string[]
   story: string
   stack: string[]
@@ -27,6 +29,8 @@ export const projects: Project[] = [
     color: "#B7CD9D",
     accent: "#EAF3D8",
     href: "/base97",
+    cover: "/images/projects/base97-cover.webp",
+    coverAlt: "base97 website home page",
     features: [
       "Fast, single-purpose tools with no unnecessary onboarding",
       "A consistent product system across a growing set of utilities",
@@ -48,6 +52,8 @@ export const projects: Project[] = [
     color: "#FFF2A6",
     accent: "#FFF9D4",
     href: "/nameideabox",
+    cover: "/images/projects/nameideabox-cover.webp",
+    coverAlt: "NameIdeaBox website home page",
     features: [
       "Generator flows tailored to different naming intents",
       "Large result sets with useful filters and quick copying",

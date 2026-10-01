@@ -2,9 +2,18 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { ChevronDown, Mail, Menu } from "lucide-react"
+import { Check, ChevronDown, Languages, Mail, Menu } from "lucide-react"
 
 import { Button } from "@/components/animate-ui/components/buttons/button"
+import {
+  Menu as LanguageMenu,
+  MenuGroup,
+  MenuGroupLabel,
+  MenuItem,
+  MenuPanel,
+  MenuSeparator,
+  MenuTrigger,
+} from "@/components/animate-ui/components/base/menu"
 import {
   Sheet,
   SheetClose,
@@ -27,7 +36,7 @@ const navigation = [
   { href: "/about", label: "About" },
 ]
 
-const languages = ["EN", "中文", "日本語"]
+const languages = ["EN", "中文"] as const
 
 function activePath(pathname: string) {
   const slug = pathname.split("/").filter(Boolean)[0]
@@ -40,7 +49,7 @@ function activePath(pathname: string) {
 
 export function SiteHeader() {
   const pathname = usePathname()
-  const [languageIndex, setLanguageIndex] = useState(0)
+  const [language, setLanguage] = useState<(typeof languages)[number]>("EN")
   const currentPath = activePath(pathname)
 
   return (
@@ -83,21 +92,52 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            hoverScale={1.03}
-            tapScale={0.96}
-            className="h-9 rounded-full border-border bg-white/65 px-3 text-xs shadow-none"
-            onClick={() =>
-              setLanguageIndex((index) => (index + 1) % languages.length)
-            }
-            aria-label="Change display language"
-          >
-            {languages[languageIndex]}
-            <ChevronDown className="size-3.5" aria-hidden="true" />
-          </Button>
+          <LanguageMenu>
+            <MenuTrigger
+              render={
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  hoverScale={1.03}
+                  tapScale={0.96}
+                  className="h-9 rounded-full border-border bg-white/65 px-3 text-xs shadow-none"
+                  aria-label="Change display language"
+                >
+                  {language}
+                  <ChevronDown className="size-3.5" aria-hidden="true" />
+                </Button>
+              }
+            />
+            <MenuPanel
+              align="end"
+              sideOffset={8}
+              className="min-w-40 rounded-xl border-border bg-[#fffef8] p-1.5 shadow-[0_18px_50px_rgba(58,79,49,0.15)]"
+            >
+              <MenuGroup>
+                <MenuGroupLabel className="flex items-center gap-2 px-2 py-2 text-xs font-bold tracking-[0.12em] text-muted-foreground uppercase">
+                  <Languages className="size-3.5" aria-hidden="true" />
+                  Language
+                </MenuGroupLabel>
+                <MenuSeparator />
+                {languages.map((item) => (
+                  <MenuItem
+                    key={item}
+                    onClick={() => setLanguage(item)}
+                    className="h-9 cursor-pointer justify-between rounded-lg px-3 font-semibold"
+                  >
+                    {item}
+                    {language === item ? (
+                      <Check
+                        className="size-3.5 text-[#708d4e]"
+                        aria-hidden="true"
+                      />
+                    ) : null}
+                  </MenuItem>
+                ))}
+              </MenuGroup>
+            </MenuPanel>
+          </LanguageMenu>
 
           <Button
             asChild

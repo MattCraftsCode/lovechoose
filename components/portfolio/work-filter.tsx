@@ -36,7 +36,7 @@ export function WorkFilter({ projects }: { projects: Project[] }) {
           <TabsTrigger
             key={item.value}
             value={item.value}
-            className="h-8 min-w-fit rounded-lg px-3 text-xs font-bold data-[state=active]:text-white"
+            className="h-8 min-w-fit rounded-lg px-3 text-xs font-bold data-[state=active]:text-foreground"
           >
             {item.label}
           </TabsTrigger>

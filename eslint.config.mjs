@@ -11,6 +11,7 @@ const eslintConfig = defineConfig([
       "hooks/use-controlled-state.tsx",
     ],
     rules: {
+      "react-hooks/immutability": "off",
       "react-hooks/set-state-in-effect": "off",
       "react-hooks/static-components": "off",
     },

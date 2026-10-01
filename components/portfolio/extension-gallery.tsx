@@ -4,17 +4,22 @@ import Link from "next/link"
 import {
   ArrowUpRight,
   Check,
+  CloudMoon,
   ExternalLink,
   Link2,
   ListFilter,
+  MoonStar,
+  Play,
   ScanSearch,
+  Volume2,
+  Waves,
 } from "lucide-react"
 
 import { Button } from "@/components/animate-ui/components/buttons/button"
 import { Slide } from "@/components/animate-ui/primitives/effects/slide"
 import type { Project } from "@/data/projects"
 
-export function ExtensionGallery({ projects }: { projects: Project[] }) {
+export function PortfolioGallery({ projects }: { projects: Project[] }) {
   return (
     <div className="mt-12 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
       {projects.map((project, index) => (
@@ -35,11 +40,17 @@ export function ExtensionGallery({ projects }: { projects: Project[] }) {
             </div>
 
             <div className="relative mt-4 aspect-[4/5] overflow-hidden rounded-2xl border border-border bg-white p-3 shadow-[0_14px_40px_rgba(58,79,49,0.08)] transition-[transform,box-shadow,border-color] duration-300 group-hover:-translate-y-1 group-hover:border-[#abc28f] group-hover:shadow-[0_24px_60px_rgba(58,79,49,0.16)]">
-              <ExtensionPreview projectName={project.name} />
+              {project.category === "mini" ? (
+                <MiniProgramPreview projectName={project.name} />
+              ) : (
+                <ExtensionPreview projectName={project.name} />
+              )}
               <div className="absolute inset-x-3 bottom-3 flex items-end justify-between gap-3 rounded-xl border border-white/65 bg-[#fffef8]/90 p-3 shadow-lg backdrop-blur-md transition-transform duration-300 sm:translate-y-[calc(100%+1rem)] sm:group-focus-within:translate-y-0 sm:group-hover:translate-y-0">
                 <div className="min-w-0">
                   <p className="text-[10px] font-bold tracking-[0.18em] text-[#708d4e] uppercase">
-                    Browser extension
+                    {project.category === "mini"
+                      ? "WeChat mini program"
+                      : "Browser extension"}
                   </p>
                   <p className="mt-1 truncate text-xs text-muted-foreground">
                     Hover, tap or open the project
@@ -60,6 +71,66 @@ export function ExtensionGallery({ projects }: { projects: Project[] }) {
           </article>
         </Slide>
       ))}
+    </div>
+  )
+}
+
+function MiniProgramPreview({ projectName }: { projectName: string }) {
+  return (
+    <div className="flex h-full flex-col overflow-hidden rounded-xl border border-[#d7e2cc] bg-[#253421] text-white">
+      <div className="flex items-center justify-between px-4 pt-4">
+        <div>
+          <p className="text-[9px] font-bold tracking-[0.2em] text-[#c7ddaa] uppercase">
+            {projectName}
+          </p>
+          <p className="mt-1 font-serif text-xl">Good evening</p>
+        </div>
+        <span className="grid size-8 place-items-center rounded-full bg-white/10">
+          <MoonStar className="size-3.5 text-[#fff2a6]" aria-hidden="true" />
+        </span>
+      </div>
+
+      <div className="relative mx-4 mt-5 flex aspect-square items-center justify-center overflow-hidden rounded-full border border-white/10 bg-[#9dbf7c]/20">
+        <span className="absolute size-[78%] rounded-full border border-white/10" />
+        <span className="absolute size-[56%] rounded-full border border-white/15" />
+        <span className="absolute size-[34%] rounded-full bg-[#fff2a6]/90 shadow-[0_0_50px_rgba(255,242,166,0.24)]" />
+        <CloudMoon
+          className="relative z-10 size-9 text-[#35452f]"
+          aria-hidden="true"
+        />
+      </div>
+
+      <div className="mt-auto bg-white/[0.07] p-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-xs font-bold">Quiet rain</p>
+            <p className="mt-1 text-[9px] text-white/55">
+              45 minute sleep ritual
+            </p>
+          </div>
+          <span className="grid size-10 place-items-center rounded-full bg-[#fff2a6] text-[#24321f]">
+            <Play className="ml-0.5 size-4 fill-current" aria-hidden="true" />
+          </span>
+        </div>
+        <div className="mt-4 flex items-end justify-between gap-1 text-[#c7ddaa]">
+          {[10, 18, 13, 24, 16, 29, 12, 21, 15, 25, 11, 18].map(
+            (height, index) => (
+              <span
+                key={index}
+                className="w-1 flex-1 rounded-full bg-current"
+                style={{ height }}
+              />
+            )
+          )}
+        </div>
+        <div className="mt-4 flex items-center gap-2 text-[9px] text-white/55">
+          <Volume2 className="size-3" aria-hidden="true" />
+          <div className="h-1 flex-1 overflow-hidden rounded-full bg-white/10">
+            <div className="h-full w-2/3 rounded-full bg-[#c7ddaa]" />
+          </div>
+          <Waves className="size-3" aria-hidden="true" />
+        </div>
+      </div>
     </div>
   )
 }
