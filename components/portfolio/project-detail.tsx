@@ -17,11 +17,11 @@ import { cn } from "@/lib/utils"
 
 export function ProjectDetail({ project }: { project: Project }) {
   return (
-    <main className="mx-auto max-w-7xl px-5 py-12 lg:px-8">
+    <main className="mx-auto max-w-7xl px-5 py-10 lg:px-8 lg:py-14">
       <Slide inView offset={20}>
         <Link
           href={project.category === "website" ? "/websites" : "/extensions"}
-          className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] text-[#708d4e] uppercase transition-colors hover:text-foreground"
+          className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.18em] text-[#5368ff] uppercase transition-colors hover:text-foreground"
         >
           <ArrowLeft className="size-3.5" aria-hidden="true" />
           {project.categoryLabel}
@@ -38,7 +38,7 @@ export function ProjectDetail({ project }: { project: Project }) {
                 href={project.liveUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="mt-5 inline-flex h-12 w-full cursor-pointer items-center justify-between rounded-xl border border-border bg-white px-4 text-sm font-bold shadow-sm transition-[transform,background-color,border-color] hover:-translate-y-0.5 hover:border-[#abc28f] hover:bg-secondary focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+                className="hard-hover mt-5 inline-flex h-12 w-full cursor-pointer items-center justify-between border border-foreground bg-card px-4 text-sm font-bold shadow-[5px_5px_0_rgba(25,26,23,0.1)] hover:bg-secondary focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
               >
                 Open live project
                 <ExternalLink className="size-4" aria-hidden="true" />
@@ -54,7 +54,7 @@ export function ProjectDetail({ project }: { project: Project }) {
         <Slide inView delay={140} offset={34}>
           <article>
             <nav
-              className="flex flex-wrap gap-2 border-b border-border pb-4"
+              className="flex flex-wrap gap-2 border-b border-foreground pb-4"
               aria-label="On this page"
             >
               <a href="#overview" className="detail-pill active">
@@ -78,7 +78,7 @@ export function ProjectDetail({ project }: { project: Project }) {
 
             <div id="overview" className="scroll-mt-28 pt-8">
               <p className="eyebrow">{project.label}</p>
-              <h1 className="mt-3 font-serif text-5xl leading-[1.02] sm:text-6xl">
+              <h1 className="mt-3 font-serif text-5xl leading-[0.98] tracking-[-0.04em] sm:text-6xl">
                 {project.name}
               </h1>
               <p className="mt-5 max-w-3xl text-lg/8 text-muted-foreground">
@@ -88,13 +88,13 @@ export function ProjectDetail({ project }: { project: Project }) {
 
             <section
               id="features"
-              className="mt-10 scroll-mt-28 rounded-2xl border border-[#dfe9cd] bg-[#f5f8eb] p-7 sm:p-8"
+              className="mt-10 scroll-mt-28 border border-foreground bg-secondary/45 p-7 sm:p-8"
             >
               <h2 className="font-serif text-3xl">Features</h2>
-              <ul className="mt-5 grid gap-3 text-sm/7 text-[#52614d]">
+              <ul className="mt-5 grid gap-3 text-sm/7 text-foreground/75">
                 {project.features.map((feature) => (
                   <li key={feature} className="flex gap-3">
-                    <span className="mt-1 grid size-5 shrink-0 place-items-center rounded-full bg-white text-[#708d4e] shadow-sm">
+                    <span className="mt-1 grid size-5 shrink-0 place-items-center border border-foreground bg-card text-[#5368ff] shadow-sm">
                       <Check className="size-3" aria-hidden="true" />
                     </span>
                     <span>{feature}</span>
@@ -105,7 +105,9 @@ export function ProjectDetail({ project }: { project: Project }) {
 
             <section id="story" className="mt-10 scroll-mt-28">
               <p className="eyebrow">Product note</p>
-              <h2 className="mt-3 font-serif text-3xl">Why I built it</h2>
+              <h2 className="mt-3 font-serif text-3xl tracking-[-0.02em]">
+                Why I built it
+              </h2>
               <p className="mt-4 text-base/8 text-muted-foreground">
                 {project.story}
               </p>
@@ -117,7 +119,7 @@ export function ProjectDetail({ project }: { project: Project }) {
                 {project.stack.map((item) => (
                   <span
                     key={item}
-                    className="rounded-full border border-[#d8e4c6] bg-[#eef5df] px-3 py-2 text-xs font-bold"
+                    className="rounded-sm border border-foreground/25 bg-card px-3 py-2 text-xs font-bold"
                   >
                     {item}
                   </span>
@@ -131,7 +133,7 @@ export function ProjectDetail({ project }: { project: Project }) {
                 className="mt-14 scroll-mt-28 border-t border-border pt-10"
               >
                 <div className="flex items-start gap-4">
-                  <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-[#eef5df] text-[#708d4e]">
+                  <span className="grid size-11 shrink-0 place-items-center border border-foreground bg-secondary text-primary">
                     <ShieldCheck className="size-5" aria-hidden="true" />
                   </span>
                   <div>
@@ -166,7 +168,7 @@ export function ProjectDetail({ project }: { project: Project }) {
                           {section.bullets.map((item) => (
                             <li key={item} className="flex gap-3">
                               <Check
-                                className="mt-1.5 size-3.5 shrink-0 text-[#708d4e]"
+                                className="mt-1.5 size-3.5 shrink-0 text-[#5368ff]"
                                 aria-hidden="true"
                               />
                               <span>{item}</span>
@@ -189,7 +191,7 @@ export function ProjectDetail({ project }: { project: Project }) {
 function ProjectMedia({ project }: { project: Project }) {
   return (
     <div
-      className="group relative aspect-video overflow-hidden rounded-2xl border border-border shadow-[0_22px_60px_rgba(58,79,49,0.12)]"
+      className="group relative aspect-video overflow-hidden border border-foreground shadow-[8px_8px_0_rgba(25,26,23,0.14)]"
       style={{ backgroundColor: project.color }}
     >
       {project.cover ? (
@@ -207,7 +209,7 @@ function ProjectMedia({ project }: { project: Project }) {
         />
       ) : (
         <div className="absolute inset-0 p-6">
-          <span className="inline-flex rounded-full bg-white/65 px-3 py-1 text-xs font-semibold backdrop-blur-sm">
+          <span className="inline-flex border border-foreground/20 bg-white/65 px-3 py-1 text-xs font-semibold backdrop-blur-sm">
             {project.category === "website" ? "Website" : "Extension"}
           </span>
           <div className="absolute inset-x-6 bottom-7">
@@ -218,12 +220,12 @@ function ProjectMedia({ project }: { project: Project }) {
         </div>
       )}
 
-      <span className="absolute top-4 left-4 rounded-full border border-white/70 bg-white/90 px-3 py-1 text-xs font-bold shadow-sm backdrop-blur-sm">
+      <span className="absolute top-4 left-4 border border-foreground/60 bg-card/90 px-3 py-1 text-xs font-bold shadow-sm backdrop-blur-sm">
         {project.category === "website" ? "Website" : "Chrome extension"}
       </span>
 
       {project.coverScroll ? (
-        <span className="absolute right-4 bottom-4 rounded-full border border-white/70 bg-white/90 px-3 py-1 text-[11px] font-bold shadow-sm backdrop-blur-sm">
+        <span className="absolute right-4 bottom-4 border border-foreground/60 bg-card/90 px-3 py-1 text-[11px] font-bold shadow-sm backdrop-blur-sm">
           Hover to scroll
         </span>
       ) : null}
@@ -233,17 +235,17 @@ function ProjectMedia({ project }: { project: Project }) {
 
 function DownloadOptions({ storeUrl }: { storeUrl: string }) {
   return (
-    <section className="mt-5 rounded-2xl border border-border bg-white p-5 shadow-sm">
+    <section className="mt-5 border border-foreground bg-card p-5 shadow-[5px_5px_0_rgba(25,26,23,0.1)]">
       <p className="font-serif text-2xl">Download</p>
       <div className="mt-4 grid gap-2">
         <a
           href={storeUrl}
           target="_blank"
           rel="noreferrer"
-          className="group flex cursor-pointer items-center gap-4 rounded-xl border border-border px-4 py-3 transition-[transform,background-color,border-color] hover:-translate-y-0.5 hover:border-[#abc28f] hover:bg-[#f7faef] focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+          className="group flex cursor-pointer items-center gap-4 border border-border px-4 py-3 transition-[transform,background-color,border-color] hover:-translate-y-0.5 hover:border-foreground hover:bg-secondary focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
         >
-          <span className="grid size-11 shrink-0 place-items-center rounded-full bg-[conic-gradient(#e94235_0_33%,#fabb05_33%_66%,#34a853_66%)] text-white shadow-sm">
-            <span className="grid size-5 place-items-center rounded-full border-2 border-white bg-[#4285f4]">
+          <span className="grid size-11 shrink-0 place-items-center border border-foreground bg-[#5368ff] text-white shadow-sm">
+            <span className="grid size-5 place-items-center border-2 border-white bg-[#ff7659]">
               <Store className="size-2.5" aria-hidden="true" />
             </span>
           </span>
@@ -284,10 +286,10 @@ function DownloadComingSoon({
   label: string
 }) {
   return (
-    <div className="flex items-center gap-4 rounded-xl border border-dashed border-border px-4 py-3 text-muted-foreground">
+    <div className="flex items-center gap-4 border border-dashed border-border px-4 py-3 text-muted-foreground">
       <span
         className={cn(
-          "grid size-11 shrink-0 place-items-center rounded-full text-white",
+          "grid size-11 shrink-0 place-items-center text-white",
           iconClassName
         )}
       >

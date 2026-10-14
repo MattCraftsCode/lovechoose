@@ -31,7 +31,7 @@ const principles = [
 
 export default function AboutPage() {
   return (
-    <main className="mx-auto max-w-6xl px-5 py-16 lg:px-8 lg:py-20">
+    <main className="mx-auto max-w-7xl px-5 py-14 lg:px-8 lg:py-20">
       <section className="grid gap-12 md:grid-cols-[0.82fr_1.18fr] md:items-center">
         <Slide inView direction="right" offset={36}>
           <StudioVisual className="w-full" />
@@ -40,7 +40,7 @@ export default function AboutPage() {
           <p className="eyebrow">
             Hello, I&apos;m the person behind lovechoose
           </p>
-          <h1 className="mt-4 font-serif text-6xl leading-[1.02] sm:text-7xl">
+          <h1 className="mt-4 font-serif text-6xl leading-[0.95] tracking-[-0.04em] sm:text-7xl">
             I like building useful things with a little personality.
           </h1>
           <p className="mt-7 text-lg/8 text-muted-foreground">
@@ -51,14 +51,14 @@ export default function AboutPage() {
             reaches a useful result.
           </p>
           <div className="mt-8 grid gap-3 sm:grid-cols-3">
-            <Fact label="Focus" value="Web tools" color="#f3f8e8" />
-            <Fact label="Style" value="Small & polished" color="#fff8cf" />
-            <Fact label="Languages" value="EN · 中文" color="#edf4df" />
+            <Fact label="Focus" value="Web tools" color="#cfe7ff" />
+            <Fact label="Style" value="Small & sharp" color="#dfff47" />
+            <Fact label="Languages" value="EN · 中文" color="#ff7659" />
           </div>
         </Slide>
       </section>
 
-      <section className="mt-24 border-t border-border pt-16">
+      <section className="mt-24 border-t border-foreground pt-16">
         <Slide inView offset={30}>
           <div className="grid gap-6 lg:grid-cols-[0.7fr_1.3fr]">
             <div>
@@ -71,9 +71,9 @@ export default function AboutPage() {
               {principles.map((principle) => (
                 <article
                   key={principle.title}
-                  className="rounded-2xl border border-border bg-white p-5 shadow-[0_12px_30px_rgba(58,79,49,0.05)]"
+                  className="hard-hover border border-foreground bg-card p-5 shadow-[5px_5px_0_rgba(25,26,23,0.08)]"
                 >
-                  <span className="grid size-10 place-items-center rounded-xl bg-secondary text-[#637c48]">
+                  <span className="grid size-10 place-items-center border border-foreground bg-secondary text-primary">
                     <principle.icon className="size-4" aria-hidden="true" />
                   </span>
                   <h3 className="mt-5 font-serif text-2xl">
@@ -90,7 +90,7 @@ export default function AboutPage() {
       </section>
 
       <Slide inView offset={30}>
-        <section className="mt-20 flex flex-col items-start justify-between gap-7 rounded-[2rem] bg-[#fff2a6] p-7 sm:flex-row sm:items-center sm:p-10">
+        <section className="mt-20 flex flex-col items-start justify-between gap-7 border border-foreground bg-secondary p-7 shadow-[8px_8px_0_rgba(25,26,23,0.13)] sm:flex-row sm:items-center sm:p-10">
           <div>
             <p className="text-xs font-bold tracking-[0.22em] text-[#65744f] uppercase">
               Have a thoughtful small project?
@@ -103,7 +103,7 @@ export default function AboutPage() {
             <Button
               asChild
               size="lg"
-              className="h-11 rounded-full px-5 shadow-none"
+              className="h-11 rounded-sm border border-primary px-5 shadow-none"
             >
               <a href={`mailto:${siteProfile.email}`}>
                 Say hello
@@ -141,7 +141,10 @@ function Fact({
   color: string
 }) {
   return (
-    <div className="rounded-xl p-4" style={{ backgroundColor: color }}>
+    <div
+      className="border border-foreground p-4"
+      style={{ backgroundColor: color }}
+    >
       <p className="text-xs font-bold tracking-[0.16em] text-muted-foreground uppercase">
         {label}
       </p>

@@ -10,15 +10,20 @@ const socialIcons = {
 
 export function SiteFooter() {
   return (
-    <footer className="mt-24 border-t border-border">
+    <footer className="mt-24 border-t border-foreground">
       <div className="mx-auto flex max-w-7xl flex-col gap-6 px-5 py-10 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between lg:px-8">
-        <p>Made with curiosity, code & matcha · lovechoose.com</p>
+        <p className="font-serif text-lg text-foreground">
+          Made for useful internet things.{" "}
+          <span className="font-sans text-sm text-muted-foreground">
+            lovechoose.com
+          </span>
+        </p>
         <nav className="flex flex-wrap gap-2" aria-label="Footer links">
           <a
             href="https://cn.lovechoose.com/"
             target="_blank"
             rel="noreferrer"
-            className="inline-flex h-9 items-center gap-2 rounded-full border border-border bg-white/70 px-3 text-xs font-bold text-foreground transition-colors hover:bg-secondary"
+            className="inline-flex h-9 items-center gap-2 rounded-sm border border-foreground/40 bg-card px-3 text-xs font-bold text-foreground transition-colors hover:border-foreground hover:bg-secondary"
             aria-label="Chinese version"
           >
             <Languages className="size-3.5" aria-hidden="true" />
@@ -33,7 +38,7 @@ export function SiteFooter() {
                 href={item.href}
                 target={item.label === "Email" ? undefined : "_blank"}
                 rel={item.label === "Email" ? undefined : "noreferrer"}
-                className="inline-flex h-9 items-center gap-2 rounded-full border border-border bg-white/70 px-3 text-xs font-bold text-foreground transition-colors hover:bg-secondary"
+                className="inline-flex h-9 items-center gap-2 rounded-sm border border-foreground/40 bg-card px-3 text-xs font-bold text-foreground transition-colors hover:border-foreground hover:bg-secondary"
                 aria-label={item.label}
               >
                 <Icon className="size-3.5" aria-hidden="true" />

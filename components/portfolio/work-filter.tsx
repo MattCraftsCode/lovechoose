@@ -31,19 +31,19 @@ export function WorkFilter({ projects }: { projects: Project[] }) {
       value={filter}
       onValueChange={(value) => setFilter(value as FilterValue)}
     >
-      <TabsList className="h-auto w-full flex-wrap justify-start gap-1 rounded-xl bg-[#eef5df] p-1.5 sm:w-fit">
+      <TabsList className="h-auto w-full flex-wrap justify-start gap-1 border border-foreground bg-card p-1 sm:w-fit">
         {filters.map((item) => (
           <TabsTrigger
             key={item.value}
             value={item.value}
-            className="h-8 min-w-fit rounded-lg px-3 text-xs font-bold data-[state=active]:text-foreground"
+            className="h-9 min-w-fit rounded-sm px-3 text-xs font-bold data-[state=active]:bg-secondary data-[state=active]:text-foreground"
           >
             {item.label}
           </TabsTrigger>
         ))}
       </TabsList>
       <div
-        className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3"
+        className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3"
         aria-live="polite"
       >
         {visibleProjects.map((project, index) => (

@@ -31,13 +31,13 @@ export function ProjectCard({
         id={project.slug}
         href={project.href}
         className={cn(
-          "project-card group block h-full transform-gpu overflow-hidden rounded-2xl border border-border bg-white p-3 shadow-[0_12px_34px_rgba(58,79,49,0.06)] transition-[transform,box-shadow,border-color] duration-[460ms] ease-in-out hover:-translate-y-1 hover:border-[#abc28f] hover:shadow-[0_20px_48px_rgba(58,79,49,0.12)] focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
+          "project-card hard-hover group block h-full transform-gpu overflow-hidden border border-foreground bg-card p-2 shadow-[5px_5px_0_rgba(25,26,23,0.1)] focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
           compact && "grid gap-4 md:grid-cols-[260px_1fr]"
         )}
       >
         <div
           className={cn(
-            "poster relative isolate min-h-[240px] overflow-hidden rounded-xl p-6",
+            "poster relative isolate min-h-[240px] overflow-hidden border border-foreground/15 p-6",
             compact && "min-h-[220px]",
             project.cover && "aspect-[16/9] min-h-0 p-0"
           )}
@@ -57,21 +57,21 @@ export function ProjectCard({
                     : "transition-transform duration-[900ms] ease-in-out group-hover:scale-[1.02]"
                 )}
               />
-              <div className="absolute inset-0 bg-linear-to-t from-[#24321f]/10 via-transparent to-transparent" />
-              <span className="absolute top-4 left-4 rounded-full border border-white/70 bg-white/85 px-3 py-1 text-xs font-semibold shadow-sm backdrop-blur-sm">
+              <div className="absolute inset-0 bg-linear-to-t from-[#191a17]/25 via-transparent to-transparent" />
+              <span className="absolute top-4 left-4 border border-foreground/60 bg-card/90 px-3 py-1 text-xs font-semibold shadow-sm backdrop-blur-sm">
                 {project.label}
               </span>
-              <span className="absolute top-4 right-4 grid size-8 place-items-center rounded-full border border-white/70 bg-white/85 shadow-sm backdrop-blur-sm transition-transform duration-[420ms] ease-in-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+              <span className="absolute top-4 right-4 grid size-8 place-items-center border border-foreground/60 bg-card/90 shadow-sm backdrop-blur-sm transition-transform duration-[420ms] ease-in-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
                 <ArrowUpRight className="size-4" aria-hidden="true" />
               </span>
             </>
           ) : (
             <>
               <div className="relative z-10 flex items-center justify-between">
-                <span className="rounded-full bg-white/70 px-3 py-1 text-xs font-semibold backdrop-blur-sm">
+                <span className="border border-foreground/20 bg-white/70 px-3 py-1 text-xs font-semibold backdrop-blur-sm">
                   {project.label}
                 </span>
-                <span className="grid size-8 place-items-center rounded-full bg-white/45 transition-transform duration-[420ms] ease-in-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                <span className="grid size-8 place-items-center border border-foreground/30 bg-white/45 transition-transform duration-[420ms] ease-in-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
                   <ArrowUpRight className="size-4" aria-hidden="true" />
                 </span>
               </div>
@@ -113,7 +113,7 @@ export function ProjectCard({
               <>
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <span className="text-xs font-bold tracking-[0.18em] text-muted-foreground uppercase">
+                    <span className="text-[11px] font-bold tracking-[0.18em] text-muted-foreground uppercase">
                       {project.categoryLabel}
                     </span>
                     <h3 className="mt-1 font-serif text-2xl">{project.name}</h3>
@@ -128,7 +128,7 @@ export function ProjectCard({
               </>
             ) : (
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold tracking-[0.18em] text-muted-foreground uppercase">
+                <span className="text-[11px] font-bold tracking-[0.18em] text-muted-foreground uppercase">
                   {project.categoryLabel}
                 </span>
                 <span className="text-sm font-bold">View project</span>

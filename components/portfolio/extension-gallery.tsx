@@ -37,8 +37,8 @@ export function PortfolioGallery({ projects }: { projects: Project[] }) {
           }}
         >
           <article id={project.slug} className="min-w-0">
-            <div className="px-2 text-center">
-              <h2 className="font-serif text-2xl leading-tight text-[#5f7d41]">
+            <div className="border-y border-foreground/20 py-3">
+              <h2 className="font-serif text-2xl leading-tight text-foreground">
                 {project.name}
               </h2>
               <p className="mt-1 truncate text-sm text-muted-foreground">
@@ -46,9 +46,9 @@ export function PortfolioGallery({ projects }: { projects: Project[] }) {
               </p>
             </div>
 
-            <div className="group relative mt-4 aspect-[4/5] transform-gpu overflow-hidden rounded-2xl border border-border bg-white p-3 shadow-[0_14px_40px_rgba(58,79,49,0.08)] transition-[transform,box-shadow,border-color] duration-[460ms] ease-in-out hover:-translate-y-1 hover:border-[#abc28f] hover:shadow-[0_20px_48px_rgba(58,79,49,0.12)]">
+            <div className="group hard-hover relative mt-4 aspect-[4/5] transform-gpu overflow-hidden border border-foreground bg-card p-2 shadow-[5px_5px_0_rgba(25,26,23,0.1)]">
               {project.cover ? (
-                <div className="relative h-full overflow-hidden rounded-xl border border-[#dfe9cf] bg-[#f8faf1]">
+                <div className="relative h-full overflow-hidden border border-foreground/20 bg-[#f5f2ea]">
                   <Image
                     src={project.cover}
                     alt={project.coverAlt ?? project.name}
@@ -62,9 +62,9 @@ export function PortfolioGallery({ projects }: { projects: Project[] }) {
               ) : (
                 <ExtensionPreview projectName={project.name} />
               )}
-              <div className="absolute inset-x-3 bottom-3 flex items-end justify-between gap-3 rounded-xl border border-white/65 bg-[#fffef8]/90 p-3 shadow-lg backdrop-blur-md transition-transform duration-[420ms] ease-in-out sm:translate-y-[calc(100%+1rem)] sm:group-focus-within:translate-y-0 sm:group-hover:translate-y-0">
+              <div className="absolute inset-x-2 bottom-2 flex items-end justify-between gap-3 border border-foreground/25 bg-background/95 p-3 shadow-lg backdrop-blur-md transition-transform duration-[420ms] ease-in-out sm:translate-y-[calc(100%+1rem)] sm:group-focus-within:translate-y-0 sm:group-hover:translate-y-0">
                 <div className="min-w-0">
-                  <p className="text-[10px] font-bold tracking-[0.18em] text-[#708d4e] uppercase">
+                  <p className="text-[10px] font-bold tracking-[0.18em] text-[#5368ff] uppercase">
                     {project.category === "mini"
                       ? "WeChat mini program"
                       : "Browser extension"}
@@ -76,7 +76,7 @@ export function PortfolioGallery({ projects }: { projects: Project[] }) {
                 <Button
                   asChild
                   size="sm"
-                  className="h-9 shrink-0 rounded-full px-3 shadow-none"
+                  className="h-9 shrink-0 rounded-sm border border-primary px-3 shadow-none"
                 >
                   <Link href={project.href} aria-label={`View ${project.name}`}>
                     View
@@ -94,23 +94,23 @@ export function PortfolioGallery({ projects }: { projects: Project[] }) {
 
 function MiniProgramPreview({ projectName }: { projectName: string }) {
   return (
-    <div className="flex h-full flex-col overflow-hidden rounded-xl border border-[#d7e2cc] bg-[#253421] text-white">
+    <div className="flex h-full flex-col overflow-hidden border border-foreground bg-[#191a17] text-white">
       <div className="flex items-center justify-between px-4 pt-4">
         <div>
-          <p className="text-[9px] font-bold tracking-[0.2em] text-[#c7ddaa] uppercase">
+          <p className="text-[9px] font-bold tracking-[0.2em] text-[#dfff47] uppercase">
             {projectName}
           </p>
           <p className="mt-1 font-serif text-xl">Good evening</p>
         </div>
         <span className="grid size-8 place-items-center rounded-full bg-white/10">
-          <MoonStar className="size-3.5 text-[#fff2a6]" aria-hidden="true" />
+          <MoonStar className="size-3.5 text-[#dfff47]" aria-hidden="true" />
         </span>
       </div>
 
       <div className="relative mx-4 mt-5 flex aspect-square items-center justify-center overflow-hidden rounded-full border border-white/10 bg-[#9dbf7c]/20">
         <span className="absolute size-[78%] rounded-full border border-white/10" />
         <span className="absolute size-[56%] rounded-full border border-white/15" />
-        <span className="absolute size-[34%] rounded-full bg-[#fff2a6]/90 shadow-[0_0_50px_rgba(255,242,166,0.24)]" />
+        <span className="absolute size-[34%] rounded-full bg-[#dfff47]/90 shadow-[0_0_50px_rgba(223,255,71,0.24)]" />
         <CloudMoon
           className="relative z-10 size-9 text-[#35452f]"
           aria-hidden="true"
@@ -125,11 +125,11 @@ function MiniProgramPreview({ projectName }: { projectName: string }) {
               45 minute sleep ritual
             </p>
           </div>
-          <span className="grid size-10 place-items-center rounded-full bg-[#fff2a6] text-[#24321f]">
+          <span className="grid size-10 place-items-center rounded-full bg-[#dfff47] text-[#191a17]">
             <Play className="ml-0.5 size-4 fill-current" aria-hidden="true" />
           </span>
         </div>
-        <div className="mt-4 flex items-end justify-between gap-1 text-[#c7ddaa]">
+        <div className="mt-4 flex items-end justify-between gap-1 text-[#dfff47]">
           {[10, 18, 13, 24, 16, 29, 12, 21, 15, 25, 11, 18].map(
             (height, index) => (
               <span
@@ -143,7 +143,7 @@ function MiniProgramPreview({ projectName }: { projectName: string }) {
         <div className="mt-4 flex items-center gap-2 text-[9px] text-white/55">
           <Volume2 className="size-3" aria-hidden="true" />
           <div className="h-1 flex-1 overflow-hidden rounded-full bg-white/10">
-            <div className="h-full w-2/3 rounded-full bg-[#c7ddaa]" />
+            <div className="h-full w-2/3 rounded-full bg-[#dfff47]" />
           </div>
           <Waves className="size-3" aria-hidden="true" />
         </div>
@@ -154,8 +154,8 @@ function MiniProgramPreview({ projectName }: { projectName: string }) {
 
 function ExtensionPreview({ projectName }: { projectName: string }) {
   return (
-    <div className="flex h-full flex-col overflow-hidden rounded-xl border border-[#dfe9cf] bg-[#f8faF1]">
-      <div className="flex h-10 items-center gap-2 border-b border-[#dfe9cf] bg-white px-3">
+    <div className="flex h-full flex-col overflow-hidden border border-foreground/20 bg-[#f5f2ea]">
+      <div className="flex h-10 items-center gap-2 border-b border-foreground/20 bg-white px-3">
         <span className="size-2 rounded-full bg-[#f0b7a7]" />
         <span className="size-2 rounded-full bg-[#efd889]" />
         <span className="size-2 rounded-full bg-[#a9c88b]" />
@@ -166,8 +166,8 @@ function ExtensionPreview({ projectName }: { projectName: string }) {
       </div>
 
       <div className="grid flex-1 grid-cols-[44px_1fr]">
-        <div className="flex flex-col items-center gap-3 border-r border-[#dfe9cf] bg-white py-4 text-[#708d4e]">
-          <span className="grid size-7 place-items-center rounded-lg bg-[#e6f0c3]">
+        <div className="flex flex-col items-center gap-3 border-r border-foreground/20 bg-white py-4 text-[#5368ff]">
+          <span className="grid size-7 place-items-center rounded-sm bg-[#dfff47]">
             <ScanSearch className="size-3.5" aria-hidden="true" />
           </span>
           <Link2 className="size-3.5" aria-hidden="true" />
@@ -178,18 +178,18 @@ function ExtensionPreview({ projectName }: { projectName: string }) {
         <div className="min-w-0 p-4">
           <div className="flex items-start justify-between gap-3">
             <div>
-              <p className="text-[10px] font-bold tracking-[0.16em] text-[#78984f] uppercase">
+              <p className="text-[10px] font-bold tracking-[0.16em] text-[#5368ff] uppercase">
                 {projectName}
               </p>
               <p className="mt-1 font-serif text-xl">Links on this page</p>
             </div>
-            <span className="rounded-full bg-[#24321f] px-2 py-1 text-[9px] font-bold text-white">
+            <span className="rounded-sm bg-[#191a17] px-2 py-1 text-[9px] font-bold text-white">
               24 found
             </span>
           </div>
 
-          <div className="mt-4 grid grid-cols-3 gap-1 rounded-lg bg-[#eaf1dc] p-1 text-center text-[9px] font-bold text-[#607052]">
-            <span className="rounded-md bg-white py-1.5 shadow-sm">All</span>
+          <div className="mt-4 grid grid-cols-3 gap-1 border border-foreground/15 bg-[#dfff47] p-1 text-center text-[9px] font-bold text-[#191a17]">
+            <span className="rounded-sm bg-white py-1.5 shadow-sm">All</span>
             <span className="py-1.5">Internal</span>
             <span className="py-1.5">External</span>
           </div>
