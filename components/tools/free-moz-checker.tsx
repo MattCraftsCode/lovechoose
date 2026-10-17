@@ -19,16 +19,47 @@ type MozResult = {
   spamScore: number
 }
 
+type CheckerError = {
+  error?: string
+  code?: string
+}
+
 function getSpamLabel(score: number) {
   if (score < 5) return "Low"
   if (score < 15) return "Moderate"
   return "Elevated"
 }
 
+function getErrorTitle(code?: string) {
+  switch (code) {
+    case "invalid_domain":
+      return "Enter a valid domain."
+    case "no_result":
+    case "empty_result":
+      return "No Moz metrics were found."
+    case "partial_result":
+      return "Moz returned only part of the result."
+    case "provider_auth":
+      return "The Moz provider is not configured."
+    case "rate_limited":
+      return "Moz is rate limiting checks."
+    case "provider_unavailable":
+      return "Moz is temporarily unavailable."
+    case "timeout":
+      return "The Moz lookup timed out."
+    case "network_error":
+      return "We could not reach Moz."
+    case "invalid_response":
+      return "Moz returned unusable data."
+    default:
+      return "The check did not complete."
+  }
+}
+
 export function FreeMozChecker() {
   const [domain, setDomain] = useState("")
   const [status, setStatus] = useState<CheckState>("idle")
-  const [error, setError] = useState("")
+  const [error, setError] = useState<CheckerError | null>(null)
   const [result, setResult] = useState<MozResult | null>(null)
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -37,13 +68,16 @@ export function FreeMozChecker() {
     const input = domain.trim()
     if (!input) {
       setResult(null)
-      setError("Enter a domain to get started.")
+      setError({
+        code: "invalid_domain",
+        error: "Enter a domain to get started.",
+      })
       setStatus("error")
       return
     }
 
     setStatus("loading")
-    setError("")
+    setError(null)
     setResult(null)
 
     try {
@@ -52,14 +86,19 @@ export function FreeMozChecker() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ domain: input }),
       })
-      const data = (await response.json()) as MozResult | { error?: string }
+      const data = (await response.json().catch(() => null)) as
+        MozResult | CheckerError | null
+
+      if (!data) {
+        throw {
+          code: "invalid_response",
+          error:
+            "The checker returned an unreadable response. Please try again later.",
+        } satisfies CheckerError
+      }
 
       if (!response.ok || !("domainAuthority" in data)) {
-        throw new Error(
-          "error" in data && data.error
-            ? data.error
-            : "We could not retrieve this domain's metrics. Please try again."
-        )
+        throw data
       }
 
       setResult(data)
@@ -67,8 +106,14 @@ export function FreeMozChecker() {
     } catch (requestError) {
       setError(
         requestError instanceof Error
-          ? requestError.message
-          : "We could not retrieve this domain's metrics. Please try again."
+          ? { error: requestError.message, code: "network_error" }
+          : typeof requestError === "object" && requestError !== null
+            ? (requestError as CheckerError)
+            : {
+                error:
+                  "The Moz request could not be completed. Please try again.",
+                code: "network_error",
+              }
       )
       setStatus("error")
     }
@@ -77,7 +122,7 @@ export function FreeMozChecker() {
   function reset() {
     setDomain("")
     setStatus("idle")
-    setError("")
+    setError(null)
     setResult(null)
   }
 
@@ -253,9 +298,9 @@ export function FreeMozChecker() {
               role="alert"
             >
               <div>
-                <p className="font-bold">The check did not complete.</p>
+                <p className="font-bold">{getErrorTitle(error?.code)}</p>
                 <p className="mt-2 max-w-lg text-sm/6 text-muted-foreground">
-                  {error}
+                  {error?.error}
                 </p>
               </div>
               <button

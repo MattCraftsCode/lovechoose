@@ -11,16 +11,45 @@ type CheckResult = {
   domainRating: number
 }
 
+type CheckerError = {
+  error?: string
+  code?: string
+}
+
 function getRatingLabel(rating: number) {
   if (rating < 20) return "Early authority signal"
   if (rating < 50) return "Growing authority signal"
   return "Established authority signal"
 }
 
+function getErrorTitle(code?: string) {
+  switch (code) {
+    case "invalid_domain":
+      return "Enter a valid domain."
+    case "no_result":
+    case "empty_result":
+      return "No DR data was found."
+    case "provider_auth":
+      return "The DR provider is not configured."
+    case "rate_limited":
+      return "The DR provider is rate limiting checks."
+    case "provider_unavailable":
+      return "The DR provider is temporarily unavailable."
+    case "timeout":
+      return "The DR lookup timed out."
+    case "network_error":
+      return "We could not reach the DR provider."
+    case "invalid_response":
+      return "The DR provider returned unusable data."
+    default:
+      return "The check did not complete."
+  }
+}
+
 export function FreeDrChecker() {
   const [domain, setDomain] = useState("")
   const [status, setStatus] = useState<CheckState>("idle")
-  const [error, setError] = useState("")
+  const [error, setError] = useState<CheckerError | null>(null)
   const [result, setResult] = useState<CheckResult | null>(null)
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -29,13 +58,16 @@ export function FreeDrChecker() {
     const input = domain.trim()
     if (!input) {
       setResult(null)
-      setError("Enter a domain to get started.")
+      setError({
+        code: "invalid_domain",
+        error: "Enter a domain to get started.",
+      })
       setStatus("error")
       return
     }
 
     setStatus("loading")
-    setError("")
+    setError(null)
     setResult(null)
 
     try {
@@ -44,14 +76,19 @@ export function FreeDrChecker() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ domain: input }),
       })
-      const data = (await response.json()) as CheckResult | { error?: string }
+      const data = (await response.json().catch(() => null)) as
+        CheckResult | CheckerError | null
+
+      if (!data) {
+        throw {
+          code: "invalid_response",
+          error:
+            "The checker returned an unreadable response. Please try again later.",
+        } satisfies CheckerError
+      }
 
       if (!response.ok || !("domainRating" in data)) {
-        throw new Error(
-          "error" in data && data.error
-            ? data.error
-            : "We could not retrieve this domain's rating. Please try again."
-        )
+        throw data
       }
 
       setResult(data)
@@ -59,8 +96,14 @@ export function FreeDrChecker() {
     } catch (requestError) {
       setError(
         requestError instanceof Error
-          ? requestError.message
-          : "We could not retrieve this domain's rating. Please try again."
+          ? { error: requestError.message, code: "network_error" }
+          : typeof requestError === "object" && requestError !== null
+            ? (requestError as CheckerError)
+            : {
+                error:
+                  "The DR request could not be completed. Please try again.",
+                code: "network_error",
+              }
       )
       setStatus("error")
     }
@@ -69,7 +112,7 @@ export function FreeDrChecker() {
   function reset() {
     setDomain("")
     setStatus("idle")
-    setError("")
+    setError(null)
     setResult(null)
   }
 
@@ -245,9 +288,9 @@ export function FreeDrChecker() {
               role="alert"
             >
               <div>
-                <p className="font-bold">The check did not complete.</p>
+                <p className="font-bold">{getErrorTitle(error?.code)}</p>
                 <p className="mt-2 max-w-lg text-sm/6 text-muted-foreground">
-                  {error}
+                  {error?.error}
                 </p>
               </div>
               <button

@@ -9,7 +9,23 @@ type RateLimitEntry = {
   resetAt: number
 }
 
+type CheckerErrorCode =
+  | "invalid_domain"
+  | "rate_limited"
+  | "provider_auth"
+  | "provider_unavailable"
+  | "provider_rejected"
+  | "no_result"
+  | "empty_result"
+  | "invalid_response"
+  | "timeout"
+  | "network_error"
+
 const requestLimits = new Map<string, RateLimitEntry>()
+
+function errorResponse(error: string, code: CheckerErrorCode, status: number) {
+  return NextResponse.json({ error, code }, { status })
+}
 
 function getClientId(request: Request) {
   return (
@@ -69,18 +85,20 @@ export async function POST(request: Request) {
   const domain = normalizeDomain(payload.domain)
 
   if (!domain) {
-    return NextResponse.json(
-      { error: "Enter a valid domain, such as example.com." },
-      { status: 400 }
+    return errorResponse(
+      "Enter a valid domain, such as example.com.",
+      "invalid_domain",
+      400
     )
   }
 
   const clientId = getClientId(request)
 
   if (isRateLimited(clientId)) {
-    return NextResponse.json(
-      { error: "Too many checks. Please wait a minute and try again." },
-      { status: 429 }
+    return errorResponse(
+      "Too many checks were submitted from this connection. Wait one minute before trying again.",
+      "rate_limited",
+      429
     )
   }
 
@@ -88,12 +106,10 @@ export async function POST(request: Request) {
 
   if (!apiKey) {
     console.error("AHREFS_API_KEY is not configured")
-    return NextResponse.json(
-      {
-        error:
-          "The checker is temporarily unavailable. Please try again later.",
-      },
-      { status: 503 }
+    return errorResponse(
+      "The DR checker is unavailable because its provider key is not configured.",
+      "provider_auth",
+      503
     )
   }
 
@@ -107,34 +123,85 @@ export async function POST(request: Request) {
         Authorization: `Bearer ${apiKey}`,
       },
       cache: "no-store",
+      signal: AbortSignal.timeout(12_000),
     })
 
     if (!response.ok) {
       console.error("Ahrefs Domain Rating request failed", response.status)
 
-      const message =
-        response.status === 429
-          ? "The data provider is busy. Please wait a moment and try again."
-          : "We could not retrieve this domain's rating. Please try again."
+      if (response.status === 404) {
+        return errorResponse(
+          `Ahrefs has no Domain Rating data for ${domain}. The domain may not be indexed yet.`,
+          "no_result",
+          404
+        )
+      }
 
-      return NextResponse.json({ error: message }, { status: response.status })
-    }
+      if (response.status === 401 || response.status === 403) {
+        return errorResponse(
+          "The DR provider rejected this site's credentials. Please contact the site owner.",
+          "provider_auth",
+          503
+        )
+      }
 
-    const data = (await response.json()) as {
-      domain_rating?: { domain_rating?: unknown }
-    }
-    const domainRating = Number(data.domain_rating?.domain_rating)
+      if (response.status === 429) {
+        return errorResponse(
+          "Ahrefs is temporarily limiting requests. Please wait a minute and try again.",
+          "rate_limited",
+          429
+        )
+      }
 
-    if (!Number.isFinite(domainRating)) {
-      console.error("Ahrefs response did not include a domain rating")
-      return NextResponse.json(
-        {
-          error:
-            "The data provider returned an unexpected response. Please try again.",
-        },
-        { status: 502 }
+      if (response.status >= 500) {
+        return errorResponse(
+          "Ahrefs is temporarily unavailable. Please try again shortly.",
+          "provider_unavailable",
+          503
+        )
+      }
+
+      return errorResponse(
+        "Ahrefs rejected this domain lookup. Check the domain and try again.",
+        "provider_rejected",
+        502
       )
     }
+
+    const data = (await response.json().catch(() => null)) as {
+      domain_rating?: { domain_rating?: unknown }
+    } | null
+
+    if (!data) {
+      console.error("Ahrefs response was empty or unreadable")
+      return errorResponse(
+        "Ahrefs returned an empty or unreadable response. Please try again later.",
+        "invalid_response",
+        502
+      )
+    }
+
+    const value = data?.domain_rating?.domain_rating
+
+    if (value === undefined || value === null) {
+      console.error("Ahrefs response did not include a domain rating")
+      return errorResponse(
+        `Ahrefs returned an empty result for ${domain}. No Domain Rating is available for this domain.`,
+        "empty_result",
+        404
+      )
+    }
+
+    if (typeof value !== "number" || !Number.isFinite(value)) {
+      console.error("Ahrefs response included an invalid domain rating")
+      return errorResponse(
+        "Ahrefs returned a Domain Rating in an unsupported format. Please try again later.",
+        "invalid_response",
+        502
+      )
+    }
+
+    const domainRating = value
 
     return NextResponse.json(
       { domain, domainRating },
@@ -146,12 +213,19 @@ export async function POST(request: Request) {
     )
   } catch (error) {
     console.error("Ahrefs Domain Rating request failed", error)
-    return NextResponse.json(
-      {
-        error:
-          "The checker is temporarily unavailable. Please try again later.",
-      },
-      { status: 502 }
+
+    if (error instanceof Error && error.name === "TimeoutError") {
+      return errorResponse(
+        "Ahrefs did not respond within 12 seconds. Please try again.",
+        "timeout",
+        504
+      )
+    }
+
+    return errorResponse(
+      "We could not reach Ahrefs. Check your connection and try again.",
+      "network_error",
+      502
     )
   }
 }
