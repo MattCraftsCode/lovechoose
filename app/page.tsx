@@ -1,5 +1,11 @@
 import Link from "next/link"
-import { ArrowDown, ArrowRight, Sparkles } from "lucide-react"
+import {
+  ArrowDown,
+  ArrowRight,
+  Gauge,
+  ShieldCheck,
+  Sparkles,
+} from "lucide-react"
 
 import { Slide } from "@/components/animate-ui/primitives/effects/slide"
 import { StudioVisual } from "@/components/portfolio/studio-visual"
@@ -91,6 +97,62 @@ export default function HomePage() {
             </p>
           </div>
         </Slide>
+        <div className="mt-9 grid gap-5 lg:grid-cols-2">
+          <Slide inView delay={70} offset={22}>
+            <Link
+              href="/tools/free-dr-checker"
+              className="hard-hover group flex h-full flex-col border border-foreground bg-card p-5 shadow-[5px_5px_0_rgba(25,26,23,0.09)] hover:bg-secondary"
+            >
+              <span className="grid size-10 place-items-center border border-foreground bg-[#5368ff] text-white">
+                <Gauge className="size-5" aria-hidden="true" />
+              </span>
+              <span className="mt-7 text-[10px] font-bold tracking-[0.16em] text-[#5368ff] uppercase">
+                Quick tool / 01
+              </span>
+              <span className="mt-2 font-serif text-3xl leading-none tracking-[-0.03em]">
+                Free DR Checker
+              </span>
+              <span className="mt-3 max-w-sm text-sm/6 text-muted-foreground">
+                Check a domain&apos;s Ahrefs Domain Rating in one focused
+                lookup.
+              </span>
+              <span className="mt-7 inline-flex items-center gap-2 text-sm font-bold">
+                Check a domain
+                <ArrowRight
+                  className="size-4 transition-transform group-hover:translate-x-1"
+                  aria-hidden="true"
+                />
+              </span>
+            </Link>
+          </Slide>
+          <Slide inView delay={140} offset={22}>
+            <Link
+              href="/tools/free-da-pa-spam-checker"
+              className="hard-hover group flex h-full flex-col border border-foreground bg-card p-5 shadow-[5px_5px_0_rgba(25,26,23,0.09)] hover:bg-[#ff7659]"
+            >
+              <span className="grid size-10 place-items-center border border-foreground bg-[#ff7659] text-primary">
+                <ShieldCheck className="size-5" aria-hidden="true" />
+              </span>
+              <span className="mt-7 text-[10px] font-bold tracking-[0.16em] text-[#5368ff] uppercase">
+                Quick tool / 02
+              </span>
+              <span className="mt-2 font-serif text-3xl leading-none tracking-[-0.03em]">
+                Free DA, PA &amp; Spam Checker
+              </span>
+              <span className="mt-3 max-w-sm text-sm/6 text-muted-foreground group-hover:text-primary/75">
+                Read Moz Domain Authority, Page Authority and Spam Score at
+                once.
+              </span>
+              <span className="mt-7 inline-flex items-center gap-2 text-sm font-bold">
+                Check authority metrics
+                <ArrowRight
+                  className="size-4 transition-transform group-hover:translate-x-1"
+                  aria-hidden="true"
+                />
+              </span>
+            </Link>
+          </Slide>
+        </div>
         <div className="mt-9">
           <WorkFilter projects={projects} />
         </div>

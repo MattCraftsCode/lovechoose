@@ -62,6 +62,8 @@
 
   html {
     @apply scroll-smooth font-sans;
+    scrollbar-color: var(--foreground) var(--muted);
+    scrollbar-width: thin;
   }
 
   body {
@@ -83,9 +85,49 @@
   button {
     -webkit-tap-highlight-color: transparent;
   }
+
+  * {
+    scrollbar-color: var(--foreground) var(--muted);
+    scrollbar-width: thin;
+  }
+
+  ::-webkit-scrollbar {
+    width: 14px;
+    height: 14px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--muted);
+    border-left: 1px solid var(--foreground);
+    border-top: 1px solid var(--foreground);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--foreground);
+    border: 3px solid var(--muted);
+    border-radius: 999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #5368ff;
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: var(--muted);
+  }
 }
 
 @layer components {
+  @keyframes dr-scan {
+    0% {
+      transform: translateX(-100%);
+    }
+
+    100% {
+      transform: translateX(220%);
+    }
+  }
+
   .grain {
     position: fixed;
     inset: 0;

@@ -2,7 +2,15 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Check, ChevronDown, Languages, Mail, Menu } from "lucide-react"
+import {
+  Check,
+  ChevronDown,
+  Gauge,
+  Languages,
+  Mail,
+  Menu,
+  ShieldCheck,
+} from "lucide-react"
 
 import { Button } from "@/components/animate-ui/components/buttons/button"
 import {
@@ -33,8 +41,9 @@ const navigation = [
   { href: "/websites", label: "Websites" },
   { href: "/extensions", label: "Extensions" },
   { href: "/mini-programs", label: "Mini Programs" },
-  { href: "/about", label: "About" },
 ]
+
+const aboutNavigation = { href: "/about", label: "About" }
 
 const languages = ["EN", "中文"] as const
 
@@ -51,6 +60,7 @@ export function SiteHeader() {
   const pathname = usePathname()
   const [language, setLanguage] = useState<(typeof languages)[number]>("EN")
   const currentPath = activePath(pathname)
+  const toolsActive = pathname.startsWith("/tools")
 
   return (
     <header className="glass sticky top-0 z-50 border-b border-foreground">
@@ -74,7 +84,7 @@ export function SiteHeader() {
         </Link>
 
         <nav
-          className="hidden items-center gap-6 md:flex"
+          className="hidden items-center gap-6 lg:flex"
           aria-label="Primary navigation"
         >
           {navigation.map((item) => (
@@ -89,6 +99,70 @@ export function SiteHeader() {
               {item.label}
             </Link>
           ))}
+          <div className="group relative">
+            <Link
+              href="/tools/free-dr-checker"
+              className={cn(
+                "nav-link inline-flex items-center gap-1 text-[13px] font-bold text-muted-foreground transition-colors hover:text-foreground",
+                toolsActive && "active text-foreground"
+              )}
+              aria-label="Tools"
+            >
+              Tools
+              <ChevronDown
+                className="size-3.5 transition-transform duration-200 group-focus-within:rotate-180 group-hover:rotate-180"
+                aria-hidden="true"
+              />
+            </Link>
+            <div className="pointer-events-none invisible absolute top-full left-1/2 z-50 w-72 -translate-x-1/2 pt-4 opacity-0 transition-[opacity,transform,visibility] duration-200 group-focus-within:pointer-events-auto group-focus-within:visible group-focus-within:opacity-100 group-hover:pointer-events-auto group-hover:visible group-hover:opacity-100">
+              <div className="border border-foreground bg-card p-1.5 shadow-[7px_7px_0_rgba(25,26,23,0.14)]">
+                <p className="px-3 py-2 text-[10px] font-bold tracking-[0.16em] text-muted-foreground uppercase">
+                  Quick tools
+                </p>
+                <Link
+                  href="/tools/free-dr-checker"
+                  className="group/item flex items-center gap-3 border border-transparent px-3 py-3 transition-colors hover:border-foreground hover:bg-secondary focus-visible:border-foreground focus-visible:bg-secondary focus-visible:outline-none"
+                >
+                  <span className="grid size-10 shrink-0 place-items-center border border-foreground bg-[#5368ff] text-white">
+                    <Gauge className="size-5" aria-hidden="true" />
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block text-sm font-bold">
+                      Free DR Checker
+                    </span>
+                    <span className="mt-0.5 block text-xs/5 text-muted-foreground">
+                      Check a domain&apos;s rating in seconds.
+                    </span>
+                  </span>
+                </Link>
+                <Link
+                  href="/tools/free-da-pa-spam-checker"
+                  className="group/item flex items-center gap-3 border border-transparent px-3 py-3 transition-colors hover:border-foreground hover:bg-secondary focus-visible:border-foreground focus-visible:bg-secondary focus-visible:outline-none"
+                >
+                  <span className="grid size-10 shrink-0 place-items-center border border-foreground bg-[#ff7659] text-primary">
+                    <ShieldCheck className="size-5" aria-hidden="true" />
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block text-sm font-bold">
+                      Free DA, PA &amp; Spam Checker
+                    </span>
+                    <span className="mt-0.5 block text-xs/5 text-muted-foreground">
+                      Read three Moz authority metrics at once.
+                    </span>
+                  </span>
+                </Link>
+              </div>
+            </div>
+          </div>
+          <Link
+            href={aboutNavigation.href}
+            className={cn(
+              "nav-link text-[13px] font-bold text-muted-foreground transition-colors hover:text-foreground",
+              currentPath === aboutNavigation.href && "active text-foreground"
+            )}
+          >
+            {aboutNavigation.label}
+          </Link>
         </nav>
 
         <div className="flex items-center gap-2">
@@ -155,7 +229,7 @@ export function SiteHeader() {
               <Button
                 variant="outline"
                 size="icon"
-                className="size-9 rounded-sm border-foreground/40 bg-card shadow-none md:hidden"
+                className="size-9 rounded-sm border-foreground/40 bg-card shadow-none lg:hidden"
                 aria-label="Open navigation"
               >
                 <Menu className="size-4" aria-hidden="true" />
@@ -190,6 +264,46 @@ export function SiteHeader() {
                     </Link>
                   </SheetClose>
                 ))}
+                <SheetClose asChild>
+                  <Link
+                    href="/tools/free-dr-checker"
+                    className={cn(
+                      "flex items-center justify-between rounded-sm px-4 py-4 text-lg font-semibold transition-colors hover:bg-secondary",
+                      toolsActive && "bg-secondary text-primary"
+                    )}
+                  >
+                    <span>Free DR Checker</span>
+                    <Gauge className="size-4" aria-hidden="true" />
+                  </Link>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Link
+                    href="/tools/free-da-pa-spam-checker"
+                    className={cn(
+                      "flex items-center justify-between rounded-sm px-4 py-4 text-lg font-semibold transition-colors hover:bg-secondary",
+                      pathname === "/tools/free-da-pa-spam-checker" &&
+                        "bg-secondary text-primary"
+                    )}
+                  >
+                    <span>Free DA, PA &amp; Spam Checker</span>
+                    <ShieldCheck className="size-4" aria-hidden="true" />
+                  </Link>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Link
+                    href={aboutNavigation.href}
+                    className={cn(
+                      "flex items-center justify-between rounded-sm px-4 py-4 text-lg font-semibold transition-colors hover:bg-secondary",
+                      currentPath === aboutNavigation.href &&
+                        "bg-secondary text-primary"
+                    )}
+                  >
+                    <span>{aboutNavigation.label}</span>
+                    <span className="font-serif text-sm text-muted-foreground">
+                      06
+                    </span>
+                  </Link>
+                </SheetClose>
               </nav>
               <div className="mt-auto p-5">
                 <Button asChild className="h-11 w-full rounded-sm">
